@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <title>NVSO Signup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <style>
+        body        { padding-top:80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+<div class="col-sm-6 col-sm-offset-3">
+
+    <h1><span class="fas fa-sign-in-alt"></span> Signup</h1>
+
+    <!-- LOGIN FORM -->
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <p> {{ form.firstname.label }}: {{ form.firstname(class="form-control", size=32) }} </p>
+        </div>
+        <div class="form-group">
+            <p> {{ form.lastname.label }}: {{ form.lastname(class="form-control", size=32) }} </p>
+        </div>
+        <div class="form-group">
+            <p> {{ form.email.label }}: {{ form.email(class="form-control", size=32) }} </p>
+        </div>
+        <div class="form-group">
+            <p> {{ form.password.label }}: {{ form.password(class="form-control", size=32) }} </p>
+        </div>
+        <p>
+            {{ form.submit(class="btn btn-warning btn-lg") }}
+        </p>
+    </form>
+
+    <hr>
+
+    <p>Have an account? <a href= "{{ url_for('login') }}" >Login</a></p>
+    <p>Or go <a href= "{{ url_for('index') }}" >home</a>.</p>
+
+</div>
+
+</div>
+</body>
+</html>
