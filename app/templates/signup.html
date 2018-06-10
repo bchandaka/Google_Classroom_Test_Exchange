@@ -20,15 +20,33 @@
         {{ form.hidden_tag() }}
         <div class="form-group">
             <p> {{ form.firstname.label }}: {{ form.firstname(class="form-control", size=32) }} </p>
+            {% for error in form.firstname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div class="form-group">
             <p> {{ form.lastname.label }}: {{ form.lastname(class="form-control", size=32) }} </p>
+            {% for error in form.lastname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div class="form-group">
             <p> {{ form.email.label }}: {{ form.email(class="form-control", size=32) }} </p>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <div class="form-group">
             <p> {{ form.password.label }}: {{ form.password(class="form-control", size=32) }} </p>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <p> {{ form.password2.label }}: {{ form.password2(class="form-control", size=32) }} </p>
+            {% for error in form.password2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </div>
         <p>
             {{ form.submit(class="btn btn-warning btn-lg") }}
