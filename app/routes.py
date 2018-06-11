@@ -8,7 +8,7 @@ from app.forms import LoginForm, SignupForm
 
 @app.route('/index')
 def index():
-    return render_template('index.html', title = 'NVSO')
+    return render_template('index.html', title = 'NVScioly Home')
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -43,4 +43,4 @@ def signup():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-    return render_template('signup.html', title = 'Login', form = signupForm)
+    return render_template('signup.html', title = 'Signup', form = signupForm)
