@@ -33,6 +33,9 @@
           <a class="nav-link" href="{{ url_for('signup') }}">Signup</a>
         </li>
         {% else %}
+        <li class="nav-item {% if request.path==url_for('profile') %} active {% endif %}">
+          <a class="nav-link" href="{{ url_for('profile') }}">Profile</a>
+        </li>
         <li class="nav-item {% if request.path==url_for('logout') %} active {% endif %}">
           <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
         </li>

@@ -8,9 +8,11 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(64), index = True)
     lastname = db.Column(db.String(64), index = True)
     email = db.Column(db.String(64), index = True)
+    grade = db.Column(db.Integer, index = True)
+    username = db.Column(db.String, index=True)
     password_hash = db.Column(db.String(128))
     def __repr__():
-        return('<User {} {}'.format(self.email))
+        return('<User {}>'.format(self.username))
     def set_password(self,password):
         self.password_hash = generate_password_hash(password)
     def check_password(self,password):
