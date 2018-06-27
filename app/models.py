@@ -22,19 +22,27 @@ class User(UserMixin, db.Model):
     def fullname(self):
         return '{} {}'.format(self.firstname, self.lastname)
 
-class Event(db.Model):
+class Tournament(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.DateTime, index=True, default=datetime.date.today().strftime("%m/%d/%y"))
-    tournament = db.Column(db.String(64), index = True)
+    name = db.Column(db.String(64), index = True)
     team = db.Column(db.String(64), index = True)
-    event_name = db.Column(db.String(64), index = True)
+    event = db.relationship("Event", backref='event', lazy='dynamic')
+    def __repr__(self):
+        return('<{} {}>'.format(self.name, self.team))
+class Event(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    tournament_id = db.Column(db.String(64), db.ForeignKey('tournament.id'))
+    event_name = db.Column(db.String(64), index=True)
     #user ids
     user1_id = db.Column(db.Integer,db.ForeignKey('user.id'))
     user2_id = db.Column(db.Integer,db.ForeignKey('user.id'))
     user3_id = db.Column(db.Integer,db.ForeignKey('user.id'))
-    user = db.relationship("User", foreign_keys = [user1_id])
+    user1 = db.relationship("User", foreign_keys=[user1_id])
+    user2 = db.relationship("User", foreign_keys=[user2_id])
+    user3 = db.relationship("User", foreign_keys=[user3_id])
     def __repr__(self):
-        return('<{} {}>'.format(self.tournament, self.event))
+        return('<{} {}>'.format(self.tournament_id, self.event))
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
