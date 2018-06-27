@@ -4,8 +4,9 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from wtforms.validators import ValidationError
 from app import db
-from app.models import User
+from app.models import User, Event, Tournament
 from app.forms import LoginForm, SignupForm
+from app.dbviews import userEvents
 from datetime import datetime
 
 @app.before_request
@@ -66,8 +67,11 @@ def logout():
 @login_required
 def profile():
     user = User.query.filter_by(username=current_user.username).first()
-    events = ['Code Busters', 'Wright Stuff', 'Mystery Architecture']
-    return render_template('profile.html', user = user, events = events)
+    t = Tournament.query.filter_by().all()
+    nameset = set([tourn.name for tourn in t])
+    teamset = set([tourn.team for tourn in t])
+    event_dict = {}
+    return render_template('profile.html', user = user, t = t, teamset= teamset, nameset = nameset, event_dict = event_dict, userEvents = userEvents)
 '''
 #<----------------------------Admin------------------------------------>
 @app.route('/admin')

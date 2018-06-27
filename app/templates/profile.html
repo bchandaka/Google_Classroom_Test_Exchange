@@ -5,10 +5,15 @@
     <h3> Username: {{ user.username }}</h3>
     <h3> Grade: {{ user.grade }} </h3>
     <h3> Last Seen: {{ user.last_seen }} </h3>
-    <h3> Events: </h3>
-    <ul>
-        {% for event in events %}
-            <li> {{ event }} </li>
+    {% for tournament in nameset %}
+        {% for team in teamset %}
+            {% set event_dict = userEvents(tournament, team) %}
+            <h3> {{ "{} {} {}".format(tournament, team, 'Events') }} </h3>
+            <ul>
+                {% for event in event_dict[user.id] %}
+                    <li> {{ event }} </li>
+                {% endfor %}
+            </ul>
         {% endfor %}
-    </ul>
+    {% endfor %}
 {% endblock %}
