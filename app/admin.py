@@ -1,5 +1,5 @@
 from app import db
-from app.models import User, Event
+from app.models import User, Event, Tournament
 
 def delete(table, id_start, id_end):
     for i in range(id_start, id_end+1):
