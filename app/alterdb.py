@@ -3,6 +3,7 @@ from app.sheets import *
 
 
 try:
+    '''
     clear('Event')
     clear('Tournament')
     add_tournament()
@@ -13,7 +14,8 @@ try:
     user3s = sheet.col_values(17)
     for i in range(1,24):
         add_event(events[i], user1s[i], user2s[i], user3s[i])
-
+    '''
+    del_user('mchandaka')
 except:
     db.session.rollback()
 '''
