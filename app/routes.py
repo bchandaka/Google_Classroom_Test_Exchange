@@ -8,7 +8,7 @@ from app.models import User, Event, Tournament
 from app.forms import LoginForm, SignupForm
 from app.dbviews import userEvents
 from datetime import datetime
-
+from app.emailer import *
 @app.before_request
 def before_request():
     if current_user.is_authenticated:
@@ -31,7 +31,8 @@ def signup():
         user.set_password(signupForm.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        flash('Congratulations, you are now a registered user! Check Your Email')
+        sendSignupEmail(user)
         return redirect(url_for('login'))
     return render_template('signup.html', title = 'Signup', form = signupForm)
 
