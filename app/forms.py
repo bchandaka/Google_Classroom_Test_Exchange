@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, BooleanField, SubmitField, SelectField, SubmitField
+from wtforms import PasswordField, HiddenField, StringField, BooleanField, SubmitField, SelectField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from app.models import User
 from flask_login import current_user
@@ -22,7 +22,7 @@ class SignupForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    password = StringField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Login')
 

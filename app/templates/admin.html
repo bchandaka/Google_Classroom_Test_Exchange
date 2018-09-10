@@ -1,0 +1,35 @@
+{% extends "navigation.html" %}
+{% block body %}
+<h1> Administrator </h1>
+<h2> User </h2>
+
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Username</th>
+        <th scope="col">Last Seen</th>
+        <th scope="col">Admin Access</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in User.query.all() %}
+        <tr>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.last_seen }}</td>
+          {% if user.admin %}
+            <td>Full</td>
+          {% else %}
+            <td>None</td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

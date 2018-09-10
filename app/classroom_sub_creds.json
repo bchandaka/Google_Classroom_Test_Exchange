@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "nv-scioly-manager",
+  "private_key_id": "e83a5054b4641e15e8c79de17c70ffc9c6a59260",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC84TQvFY8kLfYS\nBjrO1z2ak4htNovQq3FkO6YEo/U/y2GyQc6QkncMiXAQ8Cv4y5oL6b5tWpoPbr1G\nhX+6DGGDzxofzRooLNh6Ep9AIOyFo3xsUUSxcdTEiB2yW4GjBCMVTj5d1L/aRBre\nKidg1hcAEHD4KDze1wwn3FLrKXMOwduVfKBcq08SRH+gOGUof/VMlYVhrnlWvlf6\nnsB+OTo4RyfOXHiDO7kNmniePxkitmqkTkYoUES7PDm71mT8ssNMg+hPf947nTAk\nHG7MvjPjJAJkJ5CInS5a2axA/lw4FBxxfhGakSlMTrXB6V7KCVBag+KoI9j/gv5p\nrMS0w5VVAgMBAAECggEAAxbr85k2rjDSRZk0fQ2oRE8FfEPYJaGoSStwm8LS0ChT\ngMbyygqbR+k3nA9RqNArxOYd50wEGRyGnBCy9igdsDpDAyInu2CAaf7D/BiNxeHW\nty7dIMnr4QsY8UHt7Oy0ZjTRcFd6i+dxSREHc94MokOilWyTElISMNS5xn73Etax\nvSuaUI/KHgtch7XXyXybc5RtNeRS68uXDStJqqLycYgW3mHlpx05wBcFMQiD+k3M\nv1qu0o0z0R02kszw4NMpCNw/3i4TV+fk1ubEKqK+JZQQvbnAZ9B+E1jwV/kIfsCn\nPZextu9Sqp+ACiQ3B7t2xD+t3p0X+U986hH4Yoq4QQKBgQDmeWvKWKefiQJQwJ8v\nO7jfU+cC8bpkb2JfFh4lC+GY7JBPQ0OKYt1V9hAV4cZwEHeAOdhid0EtgIHwGywZ\nlkU9595/THC9DUBmSOqgh+ImKywr8Ua6QMcGkw5dU/blu+Z3psBCETYIr1Q9Sghv\nZ1JJzSOjU421uHsiSmWWNbvCSwKBgQDRzHY2dDpy60se2zX8xYTzieeiXHuHgIz2\nzQS0xzXwdwy4bkH/FDf4v3nXQsAPj+ksDPwOYcT5EHOs97Tg8tYm0jCy8HIb7otq\nnxwO46/tKhETJ8aJfR1YiPwZNzUzq6pNVIxN9BfhGozwbziJMHKbosMVtU/J3hWo\nKwHRt5pC3wKBgBCOgHPU0pXfXc83Rzg5bhp9CIdpnh5A8iwqhpfatqYpuGQ5TMzQ\nNV5LgvRPd9XtGOiZPzYzovcF2E/LY+uio+7CjXVPpHmwTgQLEO/fUxuy1kWB27bd\nmG6cedeyhHYUfYXy8LTOT7doAQE2JEz8eyjaF8lP40o+qnnYJlwYGBjpAoGAEuTE\n6JaDBQJnm3nGXOM02/HZaGfHwCY1i6xe9iDSnLs77AgR7XTWrZIg2N/sB/q/1vW8\nZVcss/llUXhlU7TK0Ggxdovs2tMavxlhH34lw8f8DauRV6Rq1iRP/71XDzYwehJZ\nKFQJKn6HnseFYeV5DMcVpojTjKxxatmkqkxMmiUCgYAUVPWlydbk6PFy6594OUrg\numsHlG5tQk1318u0RD6YwX1vZkuGZ4LdMExEwvOM8tkc0SsZXvr7L4HlEE0tiuUZ\n+7uBzjhPn932LYL/Oj4zodFNwXIu/UO0WVAoqT6+aXbvvJ/hLRmLJIJvb7HRlsNo\nm6eeW0QTkQD8nT1htKxQww==\n-----END PRIVATE KEY-----\n",
+  "client_email": "classroomlistener@nv-scioly-manager.iam.gserviceaccount.com",
+  "client_id": "113565485711226644063",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/classroomlistener%40nv-scioly-manager.iam.gserviceaccount.com"
+}
