@@ -42,7 +42,6 @@ def sendTests(email, assignment,assignment_type, event_list):
         mail.template_id = "ad7f080f-bffd-4314-a2ed-da86971b0cfb"
     elif eventNum == 4:
         mail.template_id = "19df88b3-25ef-4a16-bf51-519169cf70ab"
-
     response = sg.client.mail.send.post(request_body=mail.get())
     print(response.status_code)
     print(response.body)
