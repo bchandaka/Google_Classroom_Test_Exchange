@@ -48,4 +48,20 @@ def sendTests(email, assignment,assignment_type, event_list):
     print(response.body)
     print(response.headers)
 
+def sendCheckFilename(email, assignment, link, errors):
+    from_email = Email("bhargav2900@gmail.com")
+    subject = "{} Submission Errors".format(assignment)
+    to_email = Email(email)
+
+    content = Content("text/html", "<br/>".join(errors))
+    mail = Mail(from_email, subject, to_email, content)
+    user = User.query.filter_by(email=email).first()
+    mail.personalizations[0].add_substitution(Substitution("-name-", user.firstname))
+    mail.personalizations[0].add_substitution(Substitution("-assignmentLink-", link))
+    mail.template_id = "c837c4d6-91d8-415a-bbf3-076889b13bd2"
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
+
 

@@ -16,21 +16,16 @@ class User(db.Model):
         self.perm_id = id_res['id']
     def __repr__(self):
         return '{} {}'.format(self.firstname, self.lastname)
-'''
+
 class Assignment(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    date = db.Column(db.DateTime, index=True, default=datetime.date.today().strftime("%m/%d/%y"))
+    date = db.Column(db.DateTime, index=True, default=datetime.date.today())
     name = db.Column(db.String(64), index = True)
-    folder_id = db.Column(db.String(64), index = True)
-    def set_folder_id(self,course):
-        credentials = get_credentials()
-        service = build('drive', 'v3', credentials=credentials)
-        folder = fetch("name='{}' and mimeType='application/vnd.google-apps.folder'".format(name))
-        self.folder_id = folder[0].get('id')
-'''
+    courseWorkId = db.Column(db.Integer, index = True)
+
 class Tournament(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    date = db.Column(db.DateTime, index=True, default=datetime.date.today().strftime("%m/%d/%y"))
+    date = db.Column(db.DateTime, index=True, default=datetime.date.today())
     name = db.Column(db.String(64), index = True)
     team = db.Column(db.String(64), index = True)
     event = db.relationship("Event", backref='event', lazy='dynamic')

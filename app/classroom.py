@@ -4,7 +4,7 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 # If modifying these scopes, delete the file token.json.
 def get_credentials():
-    SCOPES =   "https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.push-notifications https://www.googleapis.com/auth/drive"
+    SCOPES = "https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.push-notifications https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds https://www.googleapis.com/auth/classroom.profile.emails https://www.googleapis.com/auth/classroom.rosters"
     store = file.Storage('app/token.json')
     creds = store.get()
     if not creds or creds.invalid:
@@ -21,6 +21,9 @@ def assign_test(service, title, body):
     courseWork = service.courses().courseWork().create(
         courseId='16712128761', body=courseWork).execute()
     print('Assignment created with ID {0}'.format(courseWork.get('id')))
+# def return_work(service,courseId, courseWorkId, id):
+#     res = service.courses().courseWork().studentSubmissions().return(courseId=courseId, courseWorkid=courseWorkId, id=id).execute()
+#     return res
 def list_courses(service):
     courses = []
     page_token = None
@@ -39,7 +42,6 @@ def list_courses(service):
         for course in courses:
             print(u'{0} ({1})'.format(course.get('name'), course.get('id')))
 def create_registration(service):
-
     body = {
           "cloudPubsubTopic": {
             "topicName": "projects/nv-scioly-manager/topics/classroomNotify"
@@ -53,7 +55,11 @@ def create_registration(service):
         }
     response = service.registrations().create(body=body).execute()
     print(response)
-creds = get_credentials()
-service = build('classroom', 'v1', http=creds.authorize(Http()))
-list_courses(service)
-
+def get_student(service,id):
+    student = service.userProfiles().get(userId=id).execute()
+    return student
+def build_service():
+    creds = get_credentials()
+    service = build('classroom', 'v1', http=creds.authorize(Http()))
+    return service
+service = get_credentials()

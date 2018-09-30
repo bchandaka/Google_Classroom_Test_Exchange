@@ -1,19 +1,26 @@
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from oauth2client import client
+from oauth2client import tools
+from oauth2client import file
 from app import db
 from app.models import User, Event, Tournament
 from datetime import datetime
-
+import time
+def get_credentials():
+    SCOPES = "https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.push-notifications https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds https://www.googleapis.com/auth/classroom.profile.emails"
+    store = file.Storage('app/token.json')
+    creds = store.get()
+    if not creds or creds.invalid:
+        flow = client.flow_from_clientsecrets('app/client_id.json', SCOPES)
+        creds = tools.run_flow(flow, store)
+    return creds
 
 def start_client():
-    # use creds to create a client to interact with the Google Drive API
-    scope = ['https://spreadsheets.google.com/feeds',
-             'https://www.googleapis.com/auth/drive']
-    creds = ServiceAccountCredentials.from_json_keyfile_name('app/nv-scioly-manager-a7f96a36e7fa.json', scope)
+    creds = get_credentials()
     client = gspread.authorize(creds)
     return client
 def load_users(client,filename):
-    print('****************Loading Users*********************')
+    print('******************Loading Users*********************')
     sheet = client.open(filename).get_worksheet(0)
     firstnames = sheet.col_values(1)
     lastnames = sheet.col_values(2)
@@ -33,6 +40,7 @@ def load_roster(client,filename): #format is 'Tournament Date'
     date = datetime.strptime(date, '%m/%d/%y')
     JV = client.open(filename).get_worksheet(1)
     Varsity = client.open(filename).get_worksheet(0)
+
     for team in [JV, Varsity]:
         add_tournament(date, tournament, team.title.lower())
         events = team.col_values(14)
@@ -60,5 +68,38 @@ def add_event(tournament, team, event_name, names):
     event = Event(tournament_id = t.id, event_name = event_name.strip(), user1_id = user_ids[0], user2_id = user_ids[1], user3_id = user_ids[2])
     db.session.add(event)
     db.session.commit()
+def tryoutList(client, filename):
+    sheet = client.open(filename).get_worksheet(0)
+    all_records = sheet.get_all_records(empty2zero=False,head=1, default_blank='')
+    print(all_records)
+    print("________________")
+    Event_list = ["Anatomy and Physiology","Disease Detectives","Water Quality","Herpetology","Designer Genes","Astronomy","Dynamic Planet","Chemistry Lab", "Forensics","Sounds of Music","Thermodynamics","Mission Possible","Experimental Design","Fermi Questions","Write It Do It","Protein Modeling","Geologic Mapping","Fossils","Boomilever","Circuit Lab","Wright Stuff","Codebusters","Mousetrap Vehicle", ""]
+    Event_dict = {}
+    for i in Event_list:
+        Event_dict[i] = []
+    print(Event_dict)
+    for i in range(len(all_records)):
+        user_name = all_records[i]['First Name'] +" "+ all_records[i]['Last Name']
+        print(user_name)
+        build_events = all_records[i]["Build/Self-Schedule Events"].split(", ")
+        print(build_events)
+        if len(build_events)>0:
+            for k in build_events:
+                Event_dict[k].append(user_name)
+        for j in range(6):
+            user_events = all_records[i]["Block {}".format(j)].split(", ")
+            print(user_events)
+            for k in user_events:
+                if k != '':
+                    print("K is " +k)
+                    Event_dict[k].append(user_name)
 
+    print(Event_dict)
+    tryoutsheet = client.open("Tryout Check-In").get_worksheet(0)
+    for i_num,i in enumerate(Event_dict.keys()):
+        tryoutsheet.update_cell(1,i_num+1, i)
+        for k_num,k in enumerate(Event_dict[i]):
+            tryoutsheet.update_cell(k_num+2,i_num+1, k)
+            time.sleep(2)
+    tryoutsheet.append_row(Event_dict)
 

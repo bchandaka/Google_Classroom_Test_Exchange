@@ -9,11 +9,13 @@ from google.oauth2 import service_account
 import googleapiclient.discovery
 
 def get_credentials():
-    SCOPES =   ['https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/classroom.courses']
-    SERVICE_ACCOUNT_FILE = 'app/nv-scioly-manager-a7f96a36e7fa.json'
-
-    credentials = service_account.Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-    return credentials
+    SCOPES = "https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.push-notifications https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds https://www.googleapis.com/auth/classroom.profile.emails"
+    store = Storage('app/token.json')
+    creds = store.get()
+    if not creds or creds.invalid:
+        flow = client.flow_from_clientsecrets('app/client_id.json', SCOPES)
+        creds = tools.run_flow(flow, store)
+    return creds
 
 def create_file(service,name, mimetype, parents='root'):
     file_metadata = {
