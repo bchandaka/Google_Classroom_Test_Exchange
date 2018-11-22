@@ -62,4 +62,4 @@ def build_service():
     creds = get_credentials()
     service = build('classroom', 'v1', http=creds.authorize(Http()))
     return service
-service = get_credentials()
+service = build_service()

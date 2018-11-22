@@ -81,20 +81,21 @@ def readPubSub(message):
         service = build_service()
         submission = service.courses().courseWork().studentSubmissions().get(courseId=message['resourceId']['courseId'], courseWorkId = message['resourceId']['courseWorkId'], id = message['resourceId']['id']).execute()
         if message['eventType'] == "MODIFIED" and submission['state'] == 'TURNED_IN':
+            print()
             attachments = submission['assignmentSubmission']['attachments']
             errorFiles = []
             for file in attachments:
                 fileTitle = file['driveFile']['title']
                 #File Format: Firstname Lastname, Event, Topic, test/key
-                if re.match(r'^\w+\s\w+\s*,\s*.*,\s*.*,\s*([Tt]est|[Kk]ey)', fileTitle):
+                if re.match(r'^\w+\s\w+\s*,\s*.*,\s*.*,\s*([Tt]est|[Kk]ey)', fileTitle.strip()):
                     fileDetails = fileTitle.split(',')
                     if Event.query.filter_by(event_name=fileDetails[1].strip().lower()).first() != None:
-                        print("Filename is correct")
+                        print("<b>Filename:</b> " + fileTitle+", <b>Error:</b> None")
                     else:
-                        print('Check the event name you assigned to your attachment')
+                        print("<b>Filename:</b> " + fileTitle+", <b>Error:</b> Incorrect Event Name")
                         errorFiles.append("<b>Filename:</b> " + fileTitle+", <b>Error:</b> Incorrect Event Name")
                 else:
-                    print("Check if the name of your file is in the correct format")
+                    print("<b>Filename:</b> " +fileTitle+", <b>Error:</b> Incorrect Filename Format")
                     errorFiles.append("<b>Filename:</b> " +fileTitle+", <b>Error:</b> Incorrect Filename Format")
             if errorFiles != []:
                 student=get_student(service, submission["userId"])
@@ -131,6 +132,7 @@ load_users(client,'UserData 9/15/18')
 load_roster(client,'Test 09/15/18')
 """
 
+create_registration(service)
 pull()
 
 #main program Sample
