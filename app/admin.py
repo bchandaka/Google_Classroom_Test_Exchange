@@ -81,7 +81,8 @@ def readPubSub(message):
         service = build_service()
         submission = service.courses().courseWork().studentSubmissions().get(courseId=message['resourceId']['courseId'], courseWorkId = message['resourceId']['courseWorkId'], id = message['resourceId']['id']).execute()
         if message['eventType'] == "MODIFIED" and submission['state'] == 'TURNED_IN':
-            print()
+            student=get_student(service, submission["userId"])
+            print("Received a submission from ")
             attachments = submission['assignmentSubmission']['attachments']
             errorFiles = []
             for file in attachments:
@@ -98,12 +99,14 @@ def readPubSub(message):
                     print("<b>Filename:</b> " +fileTitle+", <b>Error:</b> Incorrect Filename Format")
                     errorFiles.append("<b>Filename:</b> " +fileTitle+", <b>Error:</b> Incorrect Filename Format")
             if errorFiles != []:
-                student=get_student(service, submission["userId"])
-                print("Returning files + Sending Error Email")
-               # return_work(service,submission["courseId"], submission["courseWorkId"], submission["id"])
+                print("Sending Error Email")
+                #return_work(service,submission["courseId"], submission["courseWorkId"], submission["id"])
                 assignment = Assignment.query.filter_by(courseWorkId=submission['courseWorkId']).first()
                 sendCheckFilename(student["emailAddress"], assignment.name, submission["alternateLink"], errorFiles)
-
+            else:
+                print("Sending Received Submission Email")
+                assignment = Assignment.query.filter_by(courseWorkId=submission['courseWorkId']).first()
+                sendReceivedSubmission(student["emailAddress"], assignment.name, submission["alternateLink"])
 
 def pull(project="nv-scioly-manager", subscription_name="receiver"):
     subscriber = pubsub_v1.SubscriberClient()
@@ -123,16 +126,18 @@ def pull(project="nv-scioly-manager", subscription_name="receiver"):
     print('Listening for messages on {}'.format(subscription_path))
 
 #main program captains
-"""
+
 clear('Tournament')
 clear('Event')
 clear('User')
-client = start_client()
-load_users(client,'UserData 9/15/18')
-load_roster(client,'Test 09/15/18')
-"""
 
-create_registration(service)
+client = start_client()
+load_users(client,'Scioly Info Form (Responses)')
+load_roster(client,'Huntley 02/09/18')
+
+service = build_service()
+
+#create_registration(service, "Science Olympiad 2018-2019")
 pull()
 
 #main program Sample

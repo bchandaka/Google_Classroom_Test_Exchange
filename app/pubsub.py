@@ -28,4 +28,3 @@ def pull(project="nv-scioly-manager", subscription_name="receiver"):
               subscription_name, e))
 
 
-pull()

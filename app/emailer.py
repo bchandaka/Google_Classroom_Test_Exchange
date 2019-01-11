@@ -63,4 +63,18 @@ def sendCheckFilename(email, assignment, link, errors):
     print(response.body)
     print(response.headers)
 
+def sendReceivedSubmission(email, assignment, link):
+    from_email = Email("bhargav2900@gmail.com")
+    subject = "{} Received Submission".format(assignment)
+    to_email = Email(email)
+    content = Content("text/html", "Good Luck!")
+    mail = Mail(from_email, subject, to_email, content)
+    user = User.query.filter_by(email=email).first()
+    mail.personalizations[0].add_substitution(Substitution("-name-", user.firstname))
+    mail.personalizations[0].add_substitution(Substitution("-assignmentLink-", link))
+    mail.template_id = "89c4a861-283c-4ec5-8cef-3a3198e31b95"
+    response = sg.client.mail.send.post(request_body=mail.get())
+    print(response.status_code)
+    print(response.body)
+    print(response.headers)
 

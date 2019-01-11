@@ -22,12 +22,12 @@ def start_client():
 def load_users(client,filename):
     print('******************Loading Users*********************')
     sheet = client.open(filename).get_worksheet(0)
-    firstnames = sheet.col_values(1)
-    lastnames = sheet.col_values(2)
-    grades = sheet.col_values(3)
+    firstnames = sheet.col_values(2)
+    lastnames = sheet.col_values(3)
+    #grades = sheet.col_values(3)
     emails = sheet.col_values(4)
     for i in range(1,len(firstnames)):
-        add_user(firstnames[i].lower(),lastnames[i].lower(), grades[i],emails[i])
+        add_user(firstnames[i].lower(),lastnames[i].lower(), '0',emails[i])
 
 def add_user(firstname, lastname, grade, email):
     user = User(firstname = firstname.strip(), lastname = lastname.strip(), grade = grade.strip(), email = email.strip())
@@ -38,8 +38,8 @@ def load_roster(client,filename): #format is 'Tournament Date'
     print('****************Loading Roster*********************')
     tournament, date = filename.lower().split()
     date = datetime.strptime(date, '%m/%d/%y')
-    JV = client.open(filename).get_worksheet(1)
-    Varsity = client.open(filename).get_worksheet(0)
+    JV = client.open(filename).get_worksheet(0)
+    Varsity = client.open(filename).get_worksheet(1)
 
     for team in [JV, Varsity]:
         add_tournament(date, tournament, team.title.lower())
@@ -48,6 +48,7 @@ def load_roster(client,filename): #format is 'Tournament Date'
         user2s = team.col_values(16)
         user3s = team.col_values(17)
         for i in range(1,len(events)):
+            print(user1s[i], user2s[i], user3s[i])
             add_event(tournament, team.title.lower(), events[i].lower(), [user1s[i], user2s[i], user3s[i]])
 
 def add_tournament(date, tournament, team):
@@ -68,6 +69,7 @@ def add_event(tournament, team, event_name, names):
     event = Event(tournament_id = t.id, event_name = event_name.strip(), user1_id = user_ids[0], user2_id = user_ids[1], user3_id = user_ids[2])
     db.session.add(event)
     db.session.commit()
+
 def tryoutList(client, filename):
     sheet = client.open(filename).get_worksheet(0)
     all_records = sheet.get_all_records(empty2zero=False,head=1, default_blank='')

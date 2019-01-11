@@ -21,9 +21,11 @@ def assign_test(service, title, body):
     courseWork = service.courses().courseWork().create(
         courseId='16712128761', body=courseWork).execute()
     print('Assignment created with ID {0}'.format(courseWork.get('id')))
-# def return_work(service,courseId, courseWorkId, id):
-#     res = service.courses().courseWork().studentSubmissions().return(courseId=courseId, courseWorkid=courseWorkId, id=id).execute()
-#     return res
+'''
+def return_work(service,courseId, courseWorkId, id):
+    res = service.courses().courseWork().studentSubmissions()["return"](courseId=courseId, courseWorkId=courseWorkId, id=id).execute()
+    return res
+'''
 def list_courses(service):
     courses = []
     page_token = None
@@ -36,12 +38,28 @@ def list_courses(service):
         if not page_token:
             break
     if not courses:
-        print('No courses found.')
+        print("No Courses Found")
     else:
         print('Courses:')
         for course in courses:
             print(u'{0} ({1})'.format(course.get('name'), course.get('id')))
-def create_registration(service):
+def get_courseId(service, courseName):
+    courses = []
+    page_token = None
+    while True:
+        response = service.courses().list(pageToken=page_token,
+                                          pageSize=100).execute()
+        courses.extend(response.get('courses', []))
+        page_token = response.get('nextPageToken', None)
+        if not page_token:
+            break
+    for course in courses:
+        if course.get('name') == courseName:
+          return course.get('id')
+    print("Course Not Found")
+    return 18319169120 #default course is Scioly 18/19 course
+def create_registration(service,courseName):
+    courseId = get_courseId(service,courseName)
     body = {
           "cloudPubsubTopic": {
             "topicName": "projects/nv-scioly-manager/topics/classroomNotify"
@@ -49,7 +67,7 @@ def create_registration(service):
           "feed": {
             "feedType": "COURSE_WORK_CHANGES",
             "courseWorkChangesInfo": {
-              "courseId": "16712128761"
+              "courseId": str(courseId)
             }
           }
         }
@@ -62,4 +80,4 @@ def build_service():
     creds = get_credentials()
     service = build('classroom', 'v1', http=creds.authorize(Http()))
     return service
-service = build_service()
+
