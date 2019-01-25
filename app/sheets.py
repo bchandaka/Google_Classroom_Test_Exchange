@@ -38,7 +38,7 @@ def load_roster(client,filename): #format is 'Tournament Date'
     print('****************Loading Roster*********************')
     tournament, date = filename.lower().split()
     date = datetime.strptime(date, '%m/%d/%y')
-    JV = client.open(filename).get_worksheet(0)
+    JV = client.open(filename).get_worksheet(2)
     Varsity = client.open(filename).get_worksheet(1)
 
     for team in [JV, Varsity]:

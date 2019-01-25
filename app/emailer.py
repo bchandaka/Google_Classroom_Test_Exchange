@@ -27,9 +27,9 @@ def sendTests(email, assignment,assignment_type, event_list):
     content = Content("text/html", "Good Luck!")
     mail = Mail(from_email, subject, to_email, content)
     user = User.query.filter_by(email=email).first()
-    mail.personalizations[0].add_substitution(Substitution("-name-", user.firstname))
+    mail.personalizations[0].add_substitution(Substitution("-name-", user.firstname.capitalize()))
     mail.personalizations[0].add_substitution(Substitution("-assignment-", assignment))
-    mail.personalizations[0].add_substitution(Substitution("-assignment_type-", assignment_type+'s'))
+    mail.personalizations[0].add_substitution(Substitution("-assignment_types-", assignment_type+'s'))
     eventNum = len(event_list)
     for c in range(eventNum):
         mail.personalizations[0].add_substitution(Substitution("-Event{}name-".format(c+1), event_list[c][0]))

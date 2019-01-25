@@ -33,7 +33,7 @@ def create_file(service,name, mimetype, parents='root'):
 
 def fetch(service,query, sort='modifiedTime desc'):
     results = service.files().list(
-        q=query,orderBy=sort,pageSize=10,fields="nextPageToken, files(id, name, webViewLink)").execute()
+        q=query,orderBy=sort,pageSize=120,fields="nextPageToken, files(id, name, webViewLink)").execute()
     items = results.get('files', [])
     return items
 def fetch_acl(service,file_id):
