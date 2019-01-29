@@ -9,5 +9,9 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+@app.cli.command()
+@click.argument('name')
+def test_print(name):
+  print("Hello " + name)
 
-from app import admin, routes
+#from app import admin, routes

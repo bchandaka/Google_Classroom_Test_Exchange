@@ -137,7 +137,6 @@ def readPubSub(message):
     except Exception as e:
         print("Error reading message:", e)
 
-lastId = 0
 def pull(project="nv-scioly-manager", subscription_name="receiver"):
     subscriber = pubsub_v1.SubscriberClient()
     subscription_path = subscriber.subscription_path(
@@ -147,14 +146,9 @@ def pull(project="nv-scioly-manager", subscription_name="receiver"):
         print('Received message: {}'.format(message))
         print("Message ID: {}".format(message.message_id))
 
-        global lastId
-        if lastId == message.message_id:
-            print("**Received Repeated Message**")
-        else:
-            lastId = message.message_id
-            update = json.loads(message.data.decode("utf-8"))
-            print(update)
-            readPubSub(update)
+        update = json.loads(message.data.decode("utf-8"))
+        print(update)
+        readPubSub(update)
 
         message.ack()
     future = subscriber.subscribe(subscription_path, callback=callback)
