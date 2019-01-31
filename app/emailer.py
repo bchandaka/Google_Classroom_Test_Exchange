@@ -1,13 +1,13 @@
 import sendgrid
 import os
-from sendgrid.helpers.mail import *
+from sendgrid.helpers.mail import Email, Mail, Content, Substitution
 from app.models import User
 
 sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('SENDGRID_API_KEY'))
-apikey=os.environ.get('SENDGRID_API_KEY')
+apikey = os.environ.get('SENDGRID_API_KEY')
 
 
-def sendSignupEmail(user): #parameter is user object
+def sendSignupEmail(user):  # parameter is user object
     from_email = Email("bhargav2900@gmail.com")
     subject = "Welcome {}!".format(user.firstname)
     to_email = Email(user.email)
@@ -20,7 +20,8 @@ def sendSignupEmail(user): #parameter is user object
     print(response.body)
     print(response.headers)
 
-def sendTests(email, assignment,assignment_type, event_list):
+
+def sendTests(email, assignment, assignment_type, event_list):
     from_email = Email("bhargav2900@gmail.com")
     subject = "{} {}s".format(assignment, assignment_type)
     to_email = Email(email)
@@ -47,6 +48,7 @@ def sendTests(email, assignment,assignment_type, event_list):
     print(response.body)
     print(response.headers)
 
+
 def sendCheckFilename(email, assignment, link, errors):
     from_email = Email("bhargav2900@gmail.com")
     subject = "{} Submission Errors".format(assignment)
@@ -63,6 +65,7 @@ def sendCheckFilename(email, assignment, link, errors):
     print(response.body)
     print(response.headers)
 
+
 def sendReceivedSubmission(email, assignment, link):
     from_email = Email("bhargav2900@gmail.com")
     subject = "{} Received Submission".format(assignment)
@@ -77,4 +80,3 @@ def sendReceivedSubmission(email, assignment, link):
     print(response.status_code)
     print(response.body)
     print(response.headers)
-

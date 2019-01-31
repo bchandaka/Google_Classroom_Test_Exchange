@@ -1,21 +1,18 @@
-from app.admin import *
-from app.sheets import *
+from app import db
+from app.models import User, Event, Tournament, Assignment
 
 
-try:
-    '''
-    clear('Event')
-    clear('Tournament')
-    add_tournament()
-    #Roster Data
-    events = sheet.col_values(14)
-    user1s = sheet.col_values(15)
-    user2s = sheet.col_values(16)
-    user3s = sheet.col_values(17)
-    for i in range(1,24):
-        add_event(events[i], user1s[i], user2s[i], user3s[i])
-    '''
-    del_user('mchandaka')
-except:
-    db.session.rollback()
-'''
+def del_user(username):
+    db.session.delete(User.query.filter_by(username=username).first())
+    db.session.commit()
+
+
+def delete(table, id_start, id_end):
+    for i in range(id_start, id_end+1):
+        exec("{}.query.filter_by(id={:d}).delete()".format(table, i))
+    db.session.commit()
+
+
+def clear(table):
+    exec("{}.query.delete()".format(table))
+    db.session.commit()

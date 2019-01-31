@@ -6,6 +6,8 @@ from app import db
 from app.models import User, Event, Tournament
 from datetime import datetime
 import time
+
+
 def get_credentials():
     SCOPES = "https://www.googleapis.com/auth/classroom.coursework.students https://www.googleapis.com/auth/classroom.courses https://www.googleapis.com/auth/classroom.push-notifications https://www.googleapis.com/auth/drive https://spreadsheets.google.com/feeds https://www.googleapis.com/auth/classroom.profile.emails"
     store = file.Storage('app/token.json')
@@ -15,26 +17,32 @@ def get_credentials():
         creds = tools.run_flow(flow, store)
     return creds
 
+
 def start_client():
     creds = get_credentials()
     client = gspread.authorize(creds)
     return client
-def load_users(client,filename):
+
+
+def load_users(client, filename):
     print('******************Loading Users*********************')
     sheet = client.open(filename).get_worksheet(0)
     firstnames = sheet.col_values(2)
     lastnames = sheet.col_values(3)
-    #grades = sheet.col_values(3)
+    # grades = sheet.col_values(3)
     emails = sheet.col_values(4)
-    for i in range(1,len(firstnames)):
-        add_user(firstnames[i].lower(),lastnames[i].lower(), '0',emails[i])
+    for i in range(1, len(firstnames)):
+        add_user(firstnames[i].lower(), lastnames[i].lower(), '0', emails[i])
+
 
 def add_user(firstname, lastname, grade, email):
-    user = User(firstname = firstname.strip(), lastname = lastname.strip(), grade = grade.strip(), email = email.strip())
+    user = User(firstname=firstname.strip(), lastname=lastname.strip(), grade=grade.strip(), email=email.strip())
     user.set_perm_id()
     db.session.add(user)
     db.session.commit()
-def load_roster(client,filename): #format is 'Tournament Date'
+
+
+def load_roster(client, filename):  # format is 'Tournament Date'
     print('****************Loading Roster*********************')
     tournament, date = filename.lower().split()
     date = datetime.strptime(date, '%m/%d/%y')
@@ -47,32 +55,36 @@ def load_roster(client,filename): #format is 'Tournament Date'
         user1s = team.col_values(15)
         user2s = team.col_values(16)
         user3s = team.col_values(17)
-        for i in range(1,len(events)):
+        for i in range(1, len(events)):
             print(user1s[i], user2s[i], user3s[i])
             add_event(tournament, team.title.lower(), events[i].lower(), [user1s[i], user2s[i], user3s[i]])
+
 
 def add_tournament(date, tournament, team):
     t = Tournament(date=date, name=tournament.strip(), team=team.strip())
     db.session.add(t)
     db.session.commit()
 
+
 def add_event(tournament, team, event_name, names):
     user_ids = []
     for i in names:
-        if i == None or i == '':
+        if i is None or i == '':
             user_ids.append(None)
         else:
             firstname, lastname = i.lower().split()
             u = User.query.filter_by(firstname=firstname, lastname=lastname).first()
             user_ids.append(u.id)
     t = Tournament.query.filter_by(name=tournament, team=team).first()
-    event = Event(tournament_id = t.id, event_name = event_name.strip(), user1_id = user_ids[0], user2_id = user_ids[1], user3_id = user_ids[2])
+    event = Event(tournament_id=t.id, event_name=event_name.strip(), user1_id=user_ids[0], user2_id=user_ids[1], user3_id=user_ids[2])
     db.session.add(event)
     db.session.commit()
 
+
+'''
 def tryoutList(client, filename):
     sheet = client.open(filename).get_worksheet(0)
-    all_records = sheet.get_all_records(empty2zero=False,head=1, default_blank='')
+    all_records = sheet.get_all_records(empty2zero=False, head=1, default_blank='')
     print(all_records)
     print("________________")
     Event_list = ["Anatomy and Physiology","Disease Detectives","Water Quality","Herpetology","Designer Genes","Astronomy","Dynamic Planet","Chemistry Lab", "Forensics","Sounds of Music","Thermodynamics","Mission Possible","Experimental Design","Fermi Questions","Write It Do It","Protein Modeling","Geologic Mapping","Fossils","Boomilever","Circuit Lab","Wright Stuff","Codebusters","Mousetrap Vehicle", ""]
@@ -104,4 +116,4 @@ def tryoutList(client, filename):
             tryoutsheet.update_cell(k_num+2,i_num+1, k)
             time.sleep(2)
     tryoutsheet.append_row(Event_dict)
-
+'''
