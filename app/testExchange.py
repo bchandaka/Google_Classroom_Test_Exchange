@@ -75,8 +75,9 @@ def test_exchange(assignment, assignment_type):
 
     print('***********************Sending Emails***********************')
     print(email_list)
-    for key, value in email_list.items():
-        sendTests(key, assignment, assignment_type, value)
+
+    #for key, value in email_list.items():
+    #   sendTests(key, assignment, assignment_type, value)
 
 # main program captains
 
@@ -94,10 +95,10 @@ load_roster(client,'Huntley 02/09/18')
 """
 
 
-service = build_service()
+
 
 # create_registration(service, "Science Olympiad 2018-2019")
-test_exchange('Assignment #1', 'Key')
+test_exchange('Assignment #1', 'Test')
 
 # pull()
 

@@ -63,6 +63,7 @@ def readPubSub(message):
                     # File Format: Firstname Lastname, Event, Topic, test/key
                     if re.match(r'^\w+\s\w+\s*,\s*.*,\s*.*,\s*([Tt]est|[Kk]ey)', fileTitle.strip()):
                         fileDetails = fileTitle.split(',')
+
                         if Event.query.filter_by(event_name=fileDetails[1].strip().lower()).first() is not None:
                             print("<b>Filename:</b> " + fileTitle+", <b>Error:</b> None")
                         else:
