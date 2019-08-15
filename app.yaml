@@ -1,9 +1,0 @@
-runtime: python36
-api_version: 1
-
-handlers:
-- url: /
-  script: main.app
-env_variables:
-  SENDGRID_API_KEY: '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'
-  GOOGLE_APPLICATION_CREDENTIALS: 'C:\NVScioly-Dashboard\app\classroom_sub_creds.json'
