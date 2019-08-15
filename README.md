@@ -7,22 +7,22 @@ This project was created for my school's Science Olympiad Team in order to allow
 
 ## Various Services utilized in this project
 - **Flask Web Framework**
-  - *Used to connect various entities(like the database, API references, etc) into one, cohesive program*
+  - Used to connect various entities(like the database, API references, etc) into one, cohesive program
 - **Sqlite Database**
   - Holds user info(name, email, events, and event partners)
   - Holds Google Classroom Assignment Info
-- Heroku Cloud Platform
+- **Heroku Cloud Platform**
   - Allows the application to run autonomously from the cloud
-- Google Classroom API
+- **Google Classroom API**
   - Used to access test/key documents submitted to Google Classroom
-- Google Drive API
+- **Google Drive API**
   - Used to share google documents with partners
-- Google Sheets API
+- **Google Sheets API**
   - Used to load data into the database from a google sheets document
-- Google Pub/Sub API
+- **Google Pub/Sub API**
   - Allows the program to receive instant updates on assignments created/documents submitted to Google Classroom 
   - Depending on the type of message received from Google Pub/Sub, the program can add new assignment info to the database, send an email to correct the filename format of a submitted document, or share the submitted documents at a predefined time
-- Sendgrid Email API
+- **Sendgrid Email API**
   - Used to send customized emails to users
 
 
