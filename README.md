@@ -24,6 +24,7 @@ This project was created for my school's Science Olympiad Team in order to allow
   - Depending on the type of message received from Google Pub/Sub, the program can add new assignment info to the database, send an email to correct the filename format of a submitted document, or share the submitted documents to partners at a predefined time
 - **Sendgrid Email API**
   - Used to send customized emails to users
+  
 *Note: some files holding personal information, like API credentials and user data, have been removed from this repo*
 
 
