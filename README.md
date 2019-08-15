@@ -21,9 +21,9 @@ This project was created for my school's Science Olympiad Team in order to allow
   - Used to load data into the database from a google sheets document
 - **Google Pub/Sub API**
   - Allows the program to receive instant updates on assignments created/documents submitted to Google Classroom 
-  - Depending on the type of message received from Google Pub/Sub, the program can add new assignment info to the database, send an email to correct the filename format of a submitted document, or share the submitted documents at a predefined time
+  - Depending on the type of message received from Google Pub/Sub, the program can add new assignment info to the database, send an email to correct the filename format of a submitted document, or share the submitted documents to partners at a predefined time
 - **Sendgrid Email API**
   - Used to send customized emails to users
-
+*Note: some files holding personal information, like API credentials and user data, have been removed from this repo*
 
 
