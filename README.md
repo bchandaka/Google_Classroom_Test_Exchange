@@ -6,9 +6,9 @@ This project was created for my school's Science Olympiad Team in order to allow
 3. When desired, emails can be sent out to all members on the team containing links to view and study from the tests/answer keys from their respective partners for each event.
 
 ## Various Services utilized in this project
-- **Flask Web Framework
+- **Flask Web Framework**
   - *Used to connect various entities(like the database, API references, etc) into one, cohesive program*
-- **Sqlite Database
+- **Sqlite Database**
   - Holds user info(name, email, events, and event partners)
   - Holds Google Classroom Assignment Info
 - Heroku Cloud Platform
