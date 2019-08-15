@@ -11,6 +11,9 @@ This project was created for my school's Science Olympiad Team in order to allow
 - **Sqlite Database**
   - Holds user info(name, email, events, and event partners)
   - Holds Google Classroom Assignment Info
+  - Utilized the alembic migration tool to allow to keep track of database updates
+- **SqlAlchemy**
+  - Used to add/remove/alter data in the db 
 - **Heroku Cloud Platform**
   - Allows the application to run autonomously from the cloud
 - **Google Classroom API**
